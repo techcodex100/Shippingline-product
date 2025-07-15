@@ -66,20 +66,6 @@ def draw_fields(c, fields, coords):
         value = fields.get(key, "")
         c.drawString(x, y, value)
 
-def draw_grid(c, width, height, gap=20):
-    c.setFont("Helvetica", 6)
-    c.setStrokeColorRGB(0.8, 0.8, 0.8)
-
-    # Horizontal lines
-    for y in range(0, int(height), gap):
-        c.line(0, y, width, y)
-        c.drawString(2, y + 2, str(y))
-
-    # Vertical lines
-    for x in range(0, int(width), gap):
-        c.line(x, 0, x, height)
-        c.drawString(x + 2, 2, str(x))
-
 @app.post("/generate-pdf/")
 async def generate_pdf(info: Info):
     pdf_number = get_next_counter()
@@ -92,35 +78,33 @@ async def generate_pdf(info: Info):
 
     # -------- Page 1 --------
     c.drawImage(ImageReader("1.png"), 0, 0, width=width, height=height)
-    draw_grid(c, width, height)
     page1_coords = {
         "shipper_page1": (160, 695),
-        "consignee_page1": (160,672),
+        "consignee_page1": (160, 672),
         "bl_date_page1": (160, 640),
         "goods_page1": (100, 612),
         "invoice_page1": (160, 585),
         "vessel_page1": (160, 555),
         "lc_no_page1": (100, 480),
         "dated_page1": (300, 480),
-        "with_by_page1": (180,375),
+        "with_by_page1": (180, 375),
         "for_by_page1": (100, 300),
-        "signature_page1": (240 , 260),
+        "signature_page1": (240, 260),
     }
     draw_fields(c, data, page1_coords)
     c.showPage()
 
     # -------- Page 2 --------
     c.drawImage(ImageReader("2.png"), 0, 0, width=width, height=height)
-    draw_grid(c, width, height)
     page2_coords = {
         "shipper_page2": (160, 630),
         "consignee_page2": (160, 600),
         "bl_date_page2": (160, 575),
-        "goods_page2": (140,545),
+        "goods_page2": (140, 545),
         "invoice_page2": (160, 515),
-        "vessel_page2": (120,490),
+        "vessel_page2": (120, 490),
         "lc_no_page2": (60, 410),
-        "dated_page2": (300,410),
+        "dated_page2": (300, 410),
         "signature_page2": (220, 245),
     }
     draw_fields(c, data, page2_coords)
@@ -128,7 +112,6 @@ async def generate_pdf(info: Info):
 
     # -------- Page 3 --------
     c.drawImage(ImageReader("3.png"), 0, 0, width=width, height=height)
-    draw_grid(c, width, height)
     page3_coords = {
         "lc_opener_page3": (120, 620),
         "beneficiary_page3": (120, 590),
@@ -136,7 +119,7 @@ async def generate_pdf(info: Info):
         "lc_no_page3": (60, 490),
         "dated_page3": (300, 490),
         "swift_code_page3": (40, 420),
-        "bank_name_page3": (340,420),
+        "bank_name_page3": (340, 420),
         "for_by_page3": (60, 320),
         "signature_page3": (220, 300),
     }
